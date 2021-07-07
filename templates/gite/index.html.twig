@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gite Progica{% endblock %}
+
+{% block body %}
+
+  <main class="container-fluid">
+    <section class="row">
+      <h1>Liste des gîtes</h1>
+    </section>
+    <section class="row">
+      <h3>Filtres</h3>
+      <form>
+        {{ form_start(form) }}
+        <div class="row">
+          <article class="col-md-3">
+            {{ form_row(form.minSurface) }}
+          </article>
+          <article class="col-md-3">
+            {{ form_row(form.minBedroom) }}
+          </article>
+          <article class="col-md-3">
+            {{ form_row(form.maxPrice) }}
+          </article>
+          <article class="col-md-3 mt-4">
+            {{ form_row(form.accueilAnimal) }}
+          </article>
+          <article class="col-md-3 mt-4">
+            {{ form_row(form.equipements) }}
+          </article>
+        </div>
+        <div class="row">
+          <article class="col-md-3 mt-4">
+            {{ form_row(form.submit) }}
+          </article>
+        </div>
+        {{ form_end(form) }}
+      </form>
+    </section>
+    <section class="d-flex justify-content-center">
+      <article class="row">
+        {% for gite in gites %}
+          <div class="card m-4" style="width: 18rem;">
+            {% if gite.fileName %}
+              <img src="{{gite.fileName}}" class="card-img-top" alt="...">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ gite.name }}</h5>
+              <p class="card-text">{{ gite.address }}</p>
+              <p class="card-text">{{ gite.postalCode }}</p>
+            <p class="card-text">{{ gite.City }}</p>
+              <p class="card-text">Surface :
+                {{ gite.superficy }}
+                m²</p>
+              <p class="card-text">{{ formatResume(gite.descript) }}</p>
+              <a href="{{ path('gite.show', {'id': gite.id}) }}" class="btn btn-secondary">Plus d'information</a>
+            </div>
+          </div>
+        {% endfor %}
+      </article>
+    </section>
+    <section class="d-flex justify-content-center">
+      {{ knp_pagination_render(gites, 'pagination.html.twig') }}
+    </section>
+  </main>
+{% endblock %}

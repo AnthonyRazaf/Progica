@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gite Progica{% endblock %}
+
+{% block body %}
+ 
+  <div class="img d-flex justify-content-center" style>
+    <img src="images/illustration/vacances.jpg" style="width:100%;" alt="">
+  </div>
+  <section class="row mt-5">
+    {% for gite in gites %}
+      <div class="col-md-4 mt-3">
+        <div class="card">
+          {% if gite.fileName %}
+            <img src="{{gite.fileName}}" class="card-img-top" alt="...">
+           {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ gite.name }}</h5>
+            <p class="card-text">{{ gite.address }}</p>
+            <p class="card-text">{{ gite.postalCode }}</p>
+            <p class="card-text">{{ gite.City }}</p>
+            <p class="card-text">{{ formatResume(gite.descript) }}</p>
+            <a href="{{ path('gite.show', {'id': gite.id}) }}" class="btn btn-secondary">Plus d'information</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </section>
+{% endblock %}
